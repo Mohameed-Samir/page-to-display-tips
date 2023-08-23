@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tips Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="tip-container"></div>
+
+  <div class="button-container">
+    <button class="button" onclick="displayAllTips()">Display All Tips</button>
+    <button class="button" onclick="displayTipsWithInterval()">Display Tips with Interval</button>
+  </div>
+
+  <script>
+    const tips = [
+      "(1)  Smile at other people",
+      "(2)  Respect the time and deadlines",
+      "(3)  Learn some new skills",
+      "(4)  You have to be flexible and not take everything too seriously",
+      "(5)  Do not leave your prayers and you must maintain them",
+      "(6)  Be careful to use your time every minute",
+      "(7)  Don't smoke",
+      "(8)  Think best of God",
+      "(9)  Celebrate your small success, even if it is a trivial success",
+      "(10) Do not sleep late if you are keen on your day"
+    ];
+
+    function* tipGenerator() {
+      for (let i = 0; i < tips.length; i++) {
+        yield tips[i];
+      }
+    }
+
+
+    function displayAllTips() {
+      const tipContainer = document.getElementById("tip-container");
+      tipContainer.innerHTML = '';
+
+      for (const tip of tipGenerator()) {
+        const tipElement = document.createElement("p");
+        tipElement.textContent = tip;
+        tipContainer.appendChild(tipElement);
+      }
+    }
+
+    function displayTipsWithInterval() {
+      const tipContainer = document.getElementById("tip-container");
+      tipContainer.innerHTML = '';
+
+      const tipIterator = tipGenerator();
+      const intervalId = setInterval(() => {
+        const { value, done } = tipIterator.next();
+
+        if (done) {
+          clearInterval(intervalId);
+        } else {
+          const tipElement = document.createElement("p");
+          tipElement.textContent = value;
+          tipContainer.appendChild(tipElement);
+        }
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
